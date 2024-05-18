@@ -66,16 +66,24 @@ const stringify = function (A) {
 //   console.log(stringify(o));
 // };
 
+// import { srv_config } from './config';
+
+let srv_config = {
+  tn_host: "awakemud.com",
+  tn_port: 4000,
+  client_name: "Plamzi/Maldorne/AwakeCE"
+};
+
 let srv = {
   path: __dirname,
   /* this websocket proxy port */
-  ws_port: 6200,
+  ws_port: srv_config.ws_port | 6200,
   /* default telnet host */
-  tn_host: 'muds.maldorne.org',
+  tn_host: srv_config.tn_host | 'muds.maldorne.org',
   /* default telnet/target port */
-  tn_port: 5010,
+  tn_port: srv_config.tn_port | 5010,
   /* enable additional debugging */
-  debug: false,
+  debug: srv_config.debug | false,
   /* use node zlib (different from mccp) - you want this turned off unless your server can't do MCCP and your client can inflate data */
   compress: true,
   /* set to false while server is shutting down */
@@ -83,12 +91,12 @@ let srv = {
 
   ttype: {
     enabled: 1,
-    portal: ['maldorne.org', 'XTERM-256color', 'MTTS 141'],
+    portal: [srv_config.hostname | 'maldorne.org', 'XTERM-256color', 'MTTS 141'],
   },
 
   gmcp: {
     enabled: 1,
-    portal: ['client maldorne.org', 'client_version 1.0'],
+    portal: ['client ' + srv_config.client_name | 'maldorne.org', 'client_version 1.1'],
   },
 
   prt: {
